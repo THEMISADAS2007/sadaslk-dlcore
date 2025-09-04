@@ -68,120 +68,41 @@ Node.js 18+ recommended.
 
 ```js
 // ESM
-import { ytmp3, youtube, facebook, tiktok, instagram, twitter } from 'sadaslk-dlcore';
+const { ytmp3, tiktok, facebook, instagram, twitter, ytmp4 } = require('sadaslk-dlcore');
 
-const run = async () => {
-  const y = await ytmp3('https://youtu.be/VIDEO_ID', { bitrate: '192kbps' });
-  console.log('YouTube MP3:', y.audio.url);
+(async () => {
+  const mp3 = await ytmp3("youtube url");
+  console.log(mp3);
+})();
 
-  const fb = await facebook('https://www.facebook.com/watch/?v=VIDEO_ID');
-  console.log('Facebook best:', fb.best.url);
-};
+(async () => {
+const mp4dl = await ytmp4("youtube url", {
+      format: "mp4",
+      videoQuality: "720"
+    });
+console.log("mp4dl);
+})();
 
-run();
+(async () => {
+  const fb = await facebook("facebook url");
+  console.log(mp3);
+})();
+
+(async () => {
+  const tt = await tiktok("tiktok url");
+  console.log(tt);
+})();
+
+(async () => {
+  const ig = await instagram("instagram url");
+  console.log(ig);
+})();
+
+(async () => {
+  const tw = await twitter("twitter url");
+  console.log(tw);
+})();
+
 ```
 
-```js
-// CommonJS
-const { ytmp3, youtube, facebook, tiktok, instagram, twitter } = require('sadaslk-dlcore');
-```
 
----
-
-## API
-
-All functions return a **Promise** that resolves to a [Unified Result](#unified-result-shape).
-
-### YouTube MP3
-
-```ts
-async function ytmp3(url: string, options?: {
-  bitrate?: '128kbps' | '160kbps' | '192kbps' | '256kbps' | '320kbps';
-  preferM4A?: boolean; // default false
-  timeoutMs?: number;  // default 30000
-}): Promise<UnifiedResult>
-```
-
-**Example**
-
-```js
-const res = await ytmp3('https://youtu.be/VIDEO_ID', { bitrate: '320kbps' });
-console.log(res.audio); // { url, size, ext, bitrate }
-```
-
-### Facebook
-
-```ts
-async function facebook(url: string, options?: CoreOptions): Promise<UnifiedResult>
-```
-
-**Example**
-
-```js
-const res = await facebook('https://www.facebook.com/username/videos/123456/');
-console.log(res.best.url);
-```
-
-### TikTok
-
-```ts
-async function tiktok(url: string, options?: { noWatermark?: boolean } & CoreOptions): Promise<UnifiedResult>
-```
-
-**Example**
-
-```js
-const res = await tiktok('https://www.tiktok.com/@user/video/123');
-console.log(res.best.url);
-```
-
-### Instagram
-
-```ts
-async function instagram(url: string, options?: CoreOptions): Promise<UnifiedResult>
-```
-
-**Example**
-
-```js
-const res = await instagram('https://www.instagram.com/reel/ABC123/');
-for (const f of res.formats) console.log(f.quality, f.url);
-```
-
-### X (Twitter)
-
-```ts
-async function twitter(url: string, options?: CoreOptions): Promise<UnifiedResult>
-```
-
-**Example**
-
-```js
-const res = await twitter('https://x.com/user/status/123456789');
-console.log(res.best); // highest quality format
-```
-
----
-
-## Unified Result Shape
-
-```ts
-export type MediaFormat = {
-  itag?: string | number;    // when available
-  quality?: string;          // e.g. '720p', '1080p', 'hq', 'music-320kbps'
-  mime?: string;             // 'video/mp4', 'audio/mpeg', ...
-  size?: number | null;      // bytes, if known
-  url: string;               // direct file url
-  audioBitrate?: number;     // kbps
-  videoFps?: number;         // fps
-  ext?: string;              // mp4, m4a, mp3, webm, ...
-}
-
-export type UnifiedResult = {
-  provider: 'youtube' | 'facebook' | 'tiktok' | 'instagram' | 'twitter';
-  id?: string;
-  url: string;               // original source url
-  title?: string;
-  author?: string;
-  duration?: number | null;  // seconds
-```
