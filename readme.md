@@ -67,10 +67,8 @@ Node.js 18+ recommended.
 ## Quick Start
 
 ```js
-// ESM
 
-import { ytmp3, ytmp4, tiktok, facebook, instagram, twitter } from 'sadaslk-dlcore';
-Or
+
 const { ytmp3, tiktok, facebook, instagram, twitter, ytmp4 } = require('sadaslk-dlcore');
 
 (async () => {
