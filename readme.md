@@ -106,4 +106,6 @@ console.log("mp4dl);
 
 ```
 
+## ✍️ Authors <a name = "authors"></a>
 
+ [@Sadas LK]([https://github.com](https://github.com/THEMISADAS2007)) - scraped project author
